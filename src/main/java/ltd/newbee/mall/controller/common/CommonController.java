@@ -8,8 +8,8 @@
  */
 package ltd.newbee.mall.controller.common;
 
-import cn.hutool.captcha.CaptchaUtil;
-import cn.hutool.captcha.ShearCaptcha;
+import com.wf.captcha.SpecCaptcha;
+import com.wf.captcha.base.Captcha;
 import ltd.newbee.mall.common.Constants;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,20 +26,32 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class CommonController {
 
+	/// 获取验证码，返回图片流，并将验证码的值放在session，对比的时候前端可以直接从session拿验证码对比
     @GetMapping("/common/kaptcha")
     public void defaultKaptcha(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws Exception {
+    	// no-store用于防止重要的信息被无意的发布。在请求消息中发送将使得请求和响应消息都不使用缓存
         httpServletResponse.setHeader("Cache-Control", "no-store");
+        // 兼容http1.0 1.1
         httpServletResponse.setHeader("Pragma", "no-cache");
+        // 阻止浏览器缓存
         httpServletResponse.setDateHeader("Expires", 0);
+        // 返回的是图片格式
         httpServletResponse.setContentType("image/png");
 
-        ShearCaptcha shearCaptcha= CaptchaUtil.createShearCaptcha(150, 30, 4, 2);
+        // 第三方库，生成图形验证码，三个参数分别为宽、高、位数
+        SpecCaptcha captcha = new SpecCaptcha(150, 40, 4);
+
+        // 设置类型 数字和字母混合
+        captcha.setCharType(Captcha.TYPE_DEFAULT);
+
+        //设置字体
+        captcha.setCharType(Captcha.FONT_9);
 
         // 验证码存入session
-        httpServletRequest.getSession().setAttribute("verifyCode", shearCaptcha);
+        httpServletRequest.getSession().setAttribute("verifyCode", captcha.text().toLowerCase());
 
         // 输出图片流
-        shearCaptcha.write(httpServletResponse.getOutputStream());
+        captcha.out(httpServletResponse.getOutputStream());
     }
 
     @GetMapping("/common/mall/kaptcha")
@@ -49,12 +61,19 @@ public class CommonController {
         httpServletResponse.setDateHeader("Expires", 0);
         httpServletResponse.setContentType("image/png");
 
-        ShearCaptcha shearCaptcha= CaptchaUtil.createShearCaptcha(110, 40, 4, 2);
+        // 三个参数分别为宽、高、位数
+        SpecCaptcha captcha = new SpecCaptcha(110, 40, 4);
+
+        // 设置类型 数字和字母混合
+        captcha.setCharType(Captcha.TYPE_DEFAULT);
+
+        //设置字体
+        captcha.setCharType(Captcha.FONT_9);
 
         // 验证码存入session
-        httpServletRequest.getSession().setAttribute(Constants.MALL_VERIFY_CODE_KEY, shearCaptcha);
+        httpServletRequest.getSession().setAttribute(Constants.MALL_VERIFY_CODE_KEY, captcha.text().toLowerCase());
 
         // 输出图片流
-        shearCaptcha.write(httpServletResponse.getOutputStream());
+        captcha.out(httpServletResponse.getOutputStream());
     }
 }

@@ -49,14 +49,19 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
         GoodsCategory goodsCategory = goodsCategoryMapper.selectByPrimaryKey(goods.getGoodsCategoryId());
         // 分类不存在或者不是三级分类，则该参数字段异常
         if (goodsCategory == null || goodsCategory.getCategoryLevel().intValue() != NewBeeMallCategoryLevelEnum.LEVEL_THREE.getLevel()) {
+        	System.out.print("分类不存在或者不是三级分类\n");
             return ServiceResultEnum.GOODS_CATEGORY_ERROR.getResult();
         }
         if (goodsMapper.selectByCategoryIdAndName(goods.getGoodsName(), goods.getGoodsCategoryId()) != null) {
+        	System.out.print("已存在该CategoryId的商品了\n");
             return ServiceResultEnum.SAME_GOODS_EXIST.getResult();
         }
+        goods.setCreateTime(new Date());
         if (goodsMapper.insertSelective(goods) > 0) {
+        	System.out.print("插入一条商品数据成功\n");
             return ServiceResultEnum.SUCCESS.getResult();
         }
+        System.out.print("插入一条商品数据失败\n");
         return ServiceResultEnum.DB_ERROR.getResult();
     }
 

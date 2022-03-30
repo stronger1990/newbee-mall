@@ -18,7 +18,7 @@
     </resultMap>
     <sql id="Base_Column_List">
     order_id, order_no, user_id, total_price, pay_status, pay_type, pay_time, order_status,
-    extra_info, user_name, user_phone, user_address, is_deleted, create_time, update_time
+    extra_info, user_address, is_deleted, create_time, update_time
   </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select

@@ -84,6 +84,7 @@ public class NewBeeMallIndexConfigServiceImpl implements NewBeeMallIndexConfigSe
         return null;
     }
 
+    /// 从分类表获取不同分类的商品id，然后再根据商品id从商品表获取商品信息model，商品信息模型里面有很多字段的格式不一定符合需求，根据实际微改一下
     @Override
     public List<NewBeeMallIndexConfigGoodsVO> getConfigGoodsesForIndex(int configType, int number) {
         List<NewBeeMallIndexConfigGoodsVO> newBeeMallIndexConfigGoodsVOS = new ArrayList<>(number);

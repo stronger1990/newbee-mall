@@ -181,6 +181,7 @@ $('#saveButton').click(function () {
         "goodsCarousel": goodsCoverImg,
         "goodsSellStatus": goodsSellStatus
     };
+    // 在商品信息页面，goodsId=null，不会执行下面，而是执行/admin/goods/save
     if (goodsId > 0) {
         url = '/admin/goods/update';
         swlMessage = '修改成功';
@@ -220,7 +221,7 @@ $('#saveButton').click(function () {
                 })
             } else {
                 swal(result.message, {
-                    icon: "error",
+                    icon: "error",                    
                 });
             }
             ;
