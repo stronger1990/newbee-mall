@@ -1,5 +1,10 @@
 https://github.com/newbee-ltd/newbee-mall
-这个项目没有用到复杂的技术，学到的是mybatis的使用
+这个项目没有用到复杂的技术，学到的是mybatis的使用.
+运行条件是：
+1、电脑安装Java环境，配置项目Preference-Java-Compiler-Compiler compliance level的Java版本和电脑一致即可。
+2、安装mysql并导入数据库表就可以了。
+访问路径：http://localhost:28089/admin/login
+
 
 
 首次下载下载别人的项目，可没那么简单运行起来，哪怕所有依赖库都下载/加载了，但是还是会运行后访问localhost:port/还是会出错，
